@@ -1,7 +1,7 @@
 # pylint: disable=no-value-for-parameter
 import sys
 import os
-from typing import Tuple, Any, List
+from typing import Tuple, Any, List, Text
 import time
 
 from pyats import easypy
@@ -71,7 +71,7 @@ _deployment_test = (deploy_app,)
 _destroy_test = (destroy_app,)
 
 
-def tests_runner(test_suite: Tuple, instance: Any) -> List:  # type: ignore
+def tests_runner(test_suite: Tuple, instance: Any, device_name: Text) -> List:  # type: ignore
     test_suite_results = list()
     for test_module in test_suite:
         full_test_path = test_module.__file__
@@ -83,15 +83,15 @@ def tests_runner(test_suite: Tuple, instance: Any) -> List:  # type: ignore
                 )
             ),
             testscript=full_test_path,
-            **mandatory_aetest_arguments(instance, device_name="docker"),
+            **mandatory_aetest_arguments(instance, device_name),
         )
         test_suite_results.append(str(test_result))
     return test_suite_results
 
 
 def main(runtime: EasypyRuntime) -> None:
-    if "failed" not in tests_runner(_api_tests, runtime.testbed):
-        tests_runner(_web_tests, runtime.testbed)
+    if "failed" not in tests_runner(_api_tests, runtime.testbed, "docker_api"):
+        tests_runner(_web_tests, runtime.testbed, "docker_web")
 
 
 if __name__ == "__main__":
