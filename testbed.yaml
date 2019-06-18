@@ -44,3 +44,4 @@ devices:
                 protocol: ssh
                 ip: 172.18.0.1
         type: 'linux'
+

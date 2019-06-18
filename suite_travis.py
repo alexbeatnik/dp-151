@@ -94,6 +94,7 @@ def main(runtime: EasypyRuntime) -> None:
         tests_runner(_web_tests, runtime.testbed, "docker_web")
 
 
+
 if __name__ == "__main__":
     # This configuration allow to replace `easypy` with a Python runner.
     #
